@@ -1,6 +1,6 @@
-=================== unit tests (extractor + HTML parser)
-......                                                                   [100%]
-6 passed in 0.04s
+=================== unit tests (extractor, HTML parser, judge)
+..........                                                               [100%]
+10 passed in 0.07s
 
 =================== US7669123B2 vs reference feed engine
 [extract] US7669123B2 (fixture): 3 independent claims, 19 elements, 13 canonical after de-dup
@@ -33,36 +33,36 @@
 .............                                                            [100%]
 13 passed in 0.02s
 
-judge  US7669123B2  impl=impls.us7669123.feed_engine
+judge v1  US7669123B2  impl=impls.us7669123.feed_engine
 
-ok C1.E1   PASS        ground=1.00  feed_engine.monitor_activity
+ok C1.E1   PASS            ground=1.00  mutants=6/6  feed_engine.monitor_activity
            monitoring a plurality of activities in a social network environment
-ok C1.E2   PASS        ground=1.00  feed_engine.store_activity
+ok C1.E2   PASS            ground=1.00  mutants=6/6  feed_engine.store_activity
            storing the plurality of activities in a database
-ok C1.E3   PASS        ground=0.69  feed_engine.generate_news_items
+ok C1.E3   PASS            ground=0.69  mutants=3/3  feed_engine.generate_news_items
            generating a plurality of news items regarding one or more of the activities, wherein one or mor...
-ok C1.E4   PASS        ground=0.92  feed_engine.attach_informational_link
+ok C1.E4   PASS            ground=0.92  mutants=2/2  feed_engine.attach_informational_link
            attaching a link associated with at least one of the activities of another user to at least one ...
-ok C1.E5   PASS        ground=1.00  feed_engine.limit_access
+ok C1.E5   PASS            ground=1.00  mutants=3/3  feed_engine.limit_access
            limiting access to the plurality of news items to a set of viewing users
-ok C1.E6   PASS        ground=1.00  feed_engine.display_news_feed
+ok C1.E6   PASS            ground=1.00  mutants=5/5  feed_engine.display_news_feed
            displaying a news feed comprising two or more of the plurality of news items to at least one vie...
-ok C16.E1  PASS        ground=1.00  feed_engine.FeedEngine
+ok C16.E1  PASS            ground=1.00  feed_engine.FeedEngine
            a social network environment
-ok C16.E2  PASS        ground=1.00  feed_engine.monitor_activity
+ok C16.E2  PASS            ground=1.00  mutants=6/6  feed_engine.monitor_activity
            a module configured to monitor a plurality of activities in a social network environment
-ok C16.E3  PASS        ground=1.00  feed_engine.store_activity
+ok C16.E3  PASS            ground=1.00  mutants=6/6  feed_engine.store_activity
            a storage medium for storing the plurality of activities in a database
-ok C16.E4  PASS        ground=0.79  feed_engine.generate_news_items
+ok C16.E4  PASS            ground=0.79  mutants=3/3  feed_engine.generate_news_items
            a module configured to generate a plurality of news items regarding one or more of the activitie...
-ok C16.E5  PASS        ground=0.93  feed_engine.attach_informational_link
+ok C16.E5  PASS            ground=0.93  mutants=2/2  feed_engine.attach_informational_link
            a link component configured to attach a link associated with at least one of the activities of a...
-ok C16.E6  PASS        ground=1.00  feed_engine.limit_access
+ok C16.E6  PASS            ground=1.00  mutants=3/3  feed_engine.limit_access
            a privacy component configured to limit access to the plurality of news items to a set of viewin...
-ok C16.E7  PASS        ground=1.00  feed_engine.display_news_feed
+ok C16.E7  PASS            ground=1.00  mutants=5/5  feed_engine.display_news_feed
            a media generator configured to display a news feed comprising two or more of the plurality of n...
 
-13/13 elements mapped to passing, grounded code
+13/13 elements mapped to passing, grounded code, 50/50 mutants killed
 VERDICT: ACCEPT
 
 =================== US7669123B2 vs generic CRUD app (control, should REJECT)
@@ -119,48 +119,156 @@ FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E5_link_compon
 FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E6_privacy_component_limit_access_news
 7 failed, 6 passed in 0.02s
 
-judge  US7669123B2  impl=impls.crud_baseline.app
+judge v1  US7669123B2  impl=impls.crud_baseline.app
 
-XX C1.E1   UNMAPPED    ground=0.00  -
+XX C1.E1   UNMAPPED        ground=0.00  -
            monitoring a plurality of activities in a social network environment
            -> no function claims this element
-ok C1.E2   PASS        ground=0.33  app.create
+ok C1.E2   PASS            ground=0.33  mutants=2/2  app.create
            storing the plurality of activities in a database
-XX C1.E3   UNGROUNDED  ground=0.00  app.read
+XX C1.E3   UNGROUNDED      ground=0.00  app.read
            generating a plurality of news items regarding one or more of the activities, wherein one or mor...
            -> implementer doesn't describe this element
-XX C1.E4   UNMAPPED    ground=0.00  -
+XX C1.E4   UNMAPPED        ground=0.00  -
            attaching a link associated with at least one of the activities of another user to at least one ...
            -> no function claims this element
-XX C1.E5   UNMAPPED    ground=0.00  -
+XX C1.E5   UNMAPPED        ground=0.00  -
            limiting access to the plurality of news items to a set of viewing users
            -> no function claims this element
-XX C1.E6   UNGROUNDED  ground=0.00  app.list_all
+XX C1.E6   UNGROUNDED      ground=0.00  app.list_all
            displaying a news feed comprising two or more of the plurality of news items to at least one vie...
            -> implementer doesn't describe this element
-XX C16.E1  UNMAPPED    ground=0.00  -
+XX C16.E1  UNMAPPED        ground=0.00  -
            a social network environment
            -> no function claims this element
-XX C16.E2  UNMAPPED    ground=0.00  -
+XX C16.E2  UNMAPPED        ground=0.00  -
            a module configured to monitor a plurality of activities in a social network environment
            -> no function claims this element
-XX C16.E3  UNGROUNDED  ground=0.20  app.create
+XX C16.E3  UNGROUNDED      ground=0.20  app.create
            a storage medium for storing the plurality of activities in a database
            -> implementer doesn't describe this element
-XX C16.E4  UNGROUNDED  ground=0.00  app.read
+XX C16.E4  UNGROUNDED      ground=0.00  app.read
            a module configured to generate a plurality of news items regarding one or more of the activitie...
            -> implementer doesn't describe this element
-XX C16.E5  UNMAPPED    ground=0.00  -
+XX C16.E5  UNMAPPED        ground=0.00  -
            a link component configured to attach a link associated with at least one of the activities of a...
            -> no function claims this element
-XX C16.E6  UNMAPPED    ground=0.00  -
+XX C16.E6  UNMAPPED        ground=0.00  -
            a privacy component configured to limit access to the plurality of news items to a set of viewin...
            -> no function claims this element
-XX C16.E7  UNGROUNDED  ground=0.00  app.list_all
+XX C16.E7  UNGROUNDED      ground=0.00  app.list_all
            a media generator configured to display a news feed comprising two or more of the plurality of n...
            -> implementer doesn't describe this element
 
-1/13 elements mapped to passing, grounded code
+1/13 elements mapped to passing, grounded code, 2/2 mutants killed
 VERDICT: REJECT (rebuild)
 
-DEMO OK: reference accepted, CRUD rejected
+=================== US7669123B2 vs cheater (stuffed docstrings, hollow checks): v0 judge
+judge v0  US7669123B2  impl=impls.cheater.app
+
+ok C1.E1   PASS            ground=1.00  app.track
+           monitoring a plurality of activities in a social network environment
+ok C1.E2   PASS            ground=1.00  app.save
+           storing the plurality of activities in a database
+ok C1.E3   PASS            ground=0.85  app.make_items
+           generating a plurality of news items regarding one or more of the activities, wherein one or mor...
+ok C1.E4   PASS            ground=0.92  app.add_link
+           attaching a link associated with at least one of the activities of another user to at least one ...
+ok C1.E5   PASS            ground=1.00  app.restrict
+           limiting access to the plurality of news items to a set of viewing users
+ok C1.E6   PASS            ground=1.00  app.render
+           displaying a news feed comprising two or more of the plurality of news items to at least one vie...
+ok C16.E1  PASS            ground=1.00  app.Environment
+           a social network environment
+ok C16.E2  PASS            ground=1.00  app.track
+           a module configured to monitor a plurality of activities in a social network environment
+ok C16.E3  PASS            ground=1.00  app.save
+           a storage medium for storing the plurality of activities in a database
+ok C16.E4  PASS            ground=0.93  app.make_items
+           a module configured to generate a plurality of news items regarding one or more of the activitie...
+ok C16.E5  PASS            ground=0.93  app.add_link
+           a link component configured to attach a link associated with at least one of the activities of a...
+ok C16.E6  PASS            ground=1.00  app.restrict
+           a privacy component configured to limit access to the plurality of news items to a set of viewin...
+ok C16.E7  PASS            ground=1.00  app.render
+           a media generator configured to display a news feed comprising two or more of the plurality of n...
+
+13/13 elements mapped to passing, grounded code
+VERDICT: ACCEPT
+
+=================== US7669123B2 vs cheater: v1 judge (tracing + mutation)
+[extract] US7669123B2 (fixture): 3 independent claims, 19 elements, 13 canonical after de-dup
+  claim 1 [method] A method for displaying a news feed in a social network environment, t...
+    C1.E1   monitoring_activities_social_network_environment
+    C1.E2   storing_activities_database
+    C1.E3   generating_news_items_regarding_activities
+    C1.E4   attaching_link_associated_activities_another
+    C1.E5   limiting_access_news_items_set
+    C1.E6   displaying_news_feed_news_items
+  claim 16 [system] A system for displaying a news feed...
+    C16.E1  social_network_environment
+    C16.E2  module_monitor_activities_social_network
+    C16.E3  storage_medium_storing_activities_database
+    C16.E4  module_generate_news_items_regarding
+    C16.E5  link_component_attach_link_associated
+    C16.E6  privacy_component_limit_access_news
+    C16.E7  media_generator_display_news_feed
+  claim 24 [medium] A computer readable medium having embodied thereon a program, the prog...
+    C24.E1  monitoring_activities_social_network_environment  = alias of C1.E1
+    C24.E2  storing_activities_database  = alias of C1.E2
+    C24.E3  generating_news_items_regarding_activities  = alias of C1.E3
+    C24.E4  attaching_link_associated_activities_another  = alias of C1.E4
+    C24.E5  limiting_access_news_items_set  = alias of C1.E5
+    C24.E6  displaying_news_feed_news_items  = alias of C1.E6
+[evalgen] 13 evals -> out/US7669123B2/evals/test_us7669123b2_claims.py
+[evalgen] build brief -> out/US7669123B2/BUILD_BRIEF.md
+
+[evals] pytest against impls.cheater.app
+.............                                                            [100%]
+13 passed in 0.01s
+
+judge v1  US7669123B2  impl=impls.cheater.app
+
+XX C1.E1   MUTANT_SURVIVED ground=1.00  mutants=0/2  app.track
+           monitoring a plurality of activities in a social network environment
+           -> checks still pass with track: return None; track: return event
+XX C1.E2   TRACE_MISS      ground=1.00  app.save
+           storing the plurality of activities in a database
+           -> checks never execute app.save
+XX C1.E3   MUTANT_SURVIVED ground=0.85  mutants=1/2  app.make_items
+           generating a plurality of news items regarding one or more of the activities, wherein one or mor...
+           -> checks still pass with make_items: return events
+XX C1.E4   MUTANT_SURVIVED ground=0.92  mutants=0/2  app.add_link
+           attaching a link associated with at least one of the activities of another user to at least one ...
+           -> checks still pass with add_link: return None; add_link: return item
+XX C1.E5   TRACE_MISS      ground=1.00  app.restrict
+           limiting access to the plurality of news items to a set of viewing users
+           -> checks never execute app.restrict
+XX C1.E6   MUTANT_SURVIVED ground=1.00  mutants=1/2  app.render
+           displaying a news feed comprising two or more of the plurality of news items to at least one vie...
+           -> checks still pass with render: return items
+ok C16.E1  PASS            ground=1.00  app.Environment
+           a social network environment
+XX C16.E2  MUTANT_SURVIVED ground=1.00  mutants=0/2  app.track
+           a module configured to monitor a plurality of activities in a social network environment
+           -> checks still pass with track: return None; track: return event
+XX C16.E3  TRACE_MISS      ground=1.00  app.save
+           a storage medium for storing the plurality of activities in a database
+           -> checks never execute app.save
+XX C16.E4  MUTANT_SURVIVED ground=0.93  mutants=1/2  app.make_items
+           a module configured to generate a plurality of news items regarding one or more of the activitie...
+           -> checks still pass with make_items: return events
+XX C16.E5  MUTANT_SURVIVED ground=0.93  mutants=0/2  app.add_link
+           a link component configured to attach a link associated with at least one of the activities of a...
+           -> checks still pass with add_link: return None; add_link: return item
+XX C16.E6  TRACE_MISS      ground=1.00  app.restrict
+           a privacy component configured to limit access to the plurality of news items to a set of viewin...
+           -> checks never execute app.restrict
+XX C16.E7  MUTANT_SURVIVED ground=1.00  mutants=1/2  app.render
+           a media generator configured to display a news feed comprising two or more of the plurality of n...
+           -> checks still pass with render: return items
+
+1/13 elements mapped to passing, grounded code, 4/16 mutants killed
+VERDICT: REJECT (rebuild)
+
+DEMO OK: reference accepted, CRUD rejected, cheater fools v0 and dies on v1

@@ -3,7 +3,7 @@
     python -m necro fetch   US7669123B2            # pull claims (live, falls back to fixture)
     python -m necro extract US7669123B2            # claim chart JSON
     python -m necro evalgen US7669123B2            # failing pytest suite + build brief
-    python -m necro judge   US7669123B2 --impl impls.us7669123.feed_engine
+    python -m necro judge   US7669123B2 --impl impls.us7669123.feed_engine [--judge v0|v1]
     python -m necro run     US7669123B2 --impl impls.us7669123.feed_engine   # all of the above + pytest
 """
 
@@ -70,7 +70,7 @@ def cmd_evalgen(a) -> int:
 
 def cmd_judge(a) -> int:
     chart, _ = build_chart(a)
-    text, ok = judge.report(a.pid, a.impl, judge.judge(chart, a.impl))
+    text, ok = judge.report(a.pid, a.impl, judge.judge(chart, a.impl, a.judge), a.judge)
     print(text)
     return 0 if ok else 1
 
@@ -100,6 +100,8 @@ def main(argv=None) -> int:
         s.add_argument("pid")
         s.add_argument("--offline", action="store_true", help="skip live fetch, use fixture")
         s.add_argument("--impl", required=name in ("judge", "run"), help="implementation module")
+        s.add_argument("--judge", choices=("v0", "v1"), default="v1",
+                       help="v0: lexical grounding only. v1 (default): + execution tracing + mutation testing")
         s.set_defaults(fn=fn)
     a = p.parse_args(argv)
     sys.path.insert(0, str(ROOT))
