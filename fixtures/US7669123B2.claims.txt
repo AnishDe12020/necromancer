@@ -1,20 +1,51 @@
-# US7669123B2 "Dynamically providing a news feed about a user of a social network"
-# Filed 2006-08-11, adjusted expiry 2026-08-22 (per Google Patents).
-#
-# OFFLINE FIXTURE. Claim structure (independent claims 1, 16, 24 and their elements)
-# is reconstructed from public excerpts of the granted claims, not copied verbatim.
-# For exact text run on a networked machine:
-#     python -m necro fetch US7669123B2
-# which overwrites fixtures/US7669123B2.claims.txt with the live claims.
+# US7669123B2 live claims from Google Patents
 
-1. A method for displaying a news feed in a social network environment, the method comprising: monitoring a plurality of activities in a social network environment; storing the plurality of activities in a database; generating a plurality of news items regarding the activities associated with a user of the social network environment; attaching an informational link associated with at least one of the activities to at least one of the news items, the informational link enabling a viewing user to participate in the same activity; limiting access to the plurality of news items to a predetermined set of viewing users; assigning an order to the plurality of news items; and displaying a news feed comprising two or more of the plurality of news items to at least one viewing user of the predetermined set of viewing users.
+1. A method for displaying a news feed in a social network environment, the method comprising: monitoring a plurality of activities in a social network environment; storing the plurality of activities in a database; generating a plurality of news items regarding one or more of the activities, wherein one or more of the news items is for presentation to one or more viewing users and relates to an activity that was performed by another user; attaching a link associated with at least one of the activities of another user to at least one of the plurality of news items where the link enables a viewing user to participate in the same activity as the another user; limiting access to the plurality of news items to a set of viewing users; and displaying a news feed comprising two or more of the plurality of news items to at least one viewing user of the predetermined set of viewing users.
 
-2. The method of claim 1, wherein the activities include adding a friend, commenting on a post, and joining a group.
+2. The method of claim 1, wherein the plurality of activities are selected according to an affinity determined for the viewing user.
 
-3. The method of claim 1, wherein assigning the order is based on a relationship between the user and the viewing user.
+3. The method of claim 1, wherein at least one informational link comprises a dropdown menu.
 
-16. A system for displaying a news feed in a social network environment, the system comprising: a monitoring module configured to monitor a plurality of activities in the social network environment; a database configured to store the plurality of activities; a news item generator configured to generate a plurality of news items regarding the activities associated with a user; a link component configured to attach an informational link to at least one of the news items enabling a viewing user to participate in the same activity; a privacy component configured to limit access to the plurality of news items to a predetermined set of viewing users and to assign an order to the news items; and a media generator configured to display a news feed comprising two or more of the plurality of news items to at least one viewing user.
+4. The method of claim 1, further comprising attaching an active link associated with at least one of the plurality of activities, to at least one of the plurality of news items.
 
-17. The system of claim 16, wherein the privacy component applies privacy settings selected by the user.
+5. The method of claim 4, wherein the active link comprises a dropdown menu.
 
-24. A computer readable storage medium having embodied thereon a program, the program being executable by a processor for performing a method for displaying a news feed in a social network environment, the method comprising: monitoring a plurality of activities in a social network environment; storing the plurality of activities in a database; generating a plurality of news items regarding the activities associated with a user of the social network environment; attaching an informational link associated with at least one of the activities to at least one of the news items, the informational link enabling a viewing user to participate in the same activity; limiting access to the plurality of news items to a predetermined set of viewing users; assigning an order to the plurality of news items; and displaying a news feed comprising two or more of the plurality of news items to at least one viewing user of the predetermined set of viewing users.
+6. The method of claim 1, wherein the step of assigning an order comprises assigning the order according to a chronological order of occurrence of the news items.
+
+7. The method of claim 1, further comprising displaying advertising with the plurality of news items.
+
+8. The method of claim 1, further comprising: monitoring an interaction of the viewing user with the at least one of the plurality of news items; and utilizing the interaction to generate an additional news item.
+
+9. The method of claim 1, further comprising: monitoring an interaction of the viewing user with the at least one of the plurality of news items; and utilizing the interaction to select advertising for display to the viewing user.
+
+10. The method of claim 1, further comprising searching the one or more news items for a predetermined character string.
+
+11. The method of claim 1, further comprising applying a filter to the one or more news items to prevent news items regarding certain types of activities from being displayed.
+
+12. The method of claim 1, further comprising dynamically limiting a number of the plurality of news items available for display.
+
+13. The method of claim 12, wherein the step of dynamically limiting the number of the plurality of news items for display includes removing a news item from the display and adding a new news item to the display.
+
+14. The method of claim 13, wherein the news item removed from the display is selected according to the assigned order.
+
+15. The method of claim 13, wherein the news item removed from the display is selected according to affinity information.
+
+16. A system for displaying a news feed comprising: a social network environment; a module configured to monitor a plurality of activities in a social network environment; a storage medium for storing the plurality of activities in a database; a module configured to generate a plurality of news items regarding one or more of the activities, wherein one or more of the news items is for presentation to one or more viewing users and relates to an activity that was performed by another user; a link component configured to attach a link associated with at least one of the activities of another user to at least one of the plurality of news items where the link enables a viewing user to participate in the same activity as the another user; a privacy component configured to limit access to the plurality of news items to a set of viewing users; and a media generator configured to display a news feed comprising two or more of the plurality of news items to at least one viewing user of the predetermined set of viewing users.
+
+17. The system of claim 16, wherein the social network environment is a segmented community.
+
+18. The system of claim 16, wherein at least one informational link comprises a dropdown menu.
+
+19. The system of claim 16, further comprising an active link component configured to attach an active link associated with at least one of the plurality of activities to at least one of the plurality of news items.
+
+20. The system of claim 16, wherein the display order component is configured to assign the order to the plurality of news items generated according to an order of occurrence of the plurality of news items.
+
+21. The system of claim 16, wherein the privacy component is configured to limit the access to users of the network environment.
+
+22. The system of claim 16, wherein the privacy component is configured to limit the access according to privacy settings determined by the user of the social network environment.
+
+23. The system of claim 16, further comprising a dynamic list component configured to remove a predetermined news item from the plurality of news items and add a new news item to the plurality of news items.
+
+24. A computer readable medium having embodied thereon a program, the program being executable by a processor for performing a method for displaying a news feed, the method comprising: monitoring a plurality of activities in a social network environment; storing the plurality of activities in a database; generating a plurality of news items regarding one or more of the activities, wherein one or more of the news items is for presentation to one or more viewing users and relates to an activity that was performed by another user; attaching a link associated with at least one of the activities of another user to at least one of the plurality of news items where the link enables a viewing user to participate in the same activity as the another user; limiting access to the plurality of news items to a set of viewing users; and displaying a news feed comprising two or more of the plurality of news items to at least one viewing user of the predetermined set of viewing users.
+
+25. The computer readable medium of claim 24, further comprising attaching an active link associated with at least one of the plurality of activities to at least one of the plurality of news items.
