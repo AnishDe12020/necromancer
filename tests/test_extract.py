@@ -49,7 +49,7 @@ def test_categories():
 def test_us7669123_fixture_chart():
     chart = extract(load_fixture("US7669123B2"))
     assert [(c.number, c.category, len(c.elements)) for c in chart] == [
-        (1, "method", 7), (16, "system", 6), (24, "medium", 7)]
+        (1, "method", 6), (16, "system", 7), (24, "medium", 6)]
     # claim 24 restates claim 1, so it is aliased, not implemented twice
     assert all(e.alias_of == f"C1.E{i}" for i, e in enumerate(chart[2].elements, 1))
     assert len(canonical(chart)) == 13

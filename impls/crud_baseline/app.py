@@ -11,7 +11,7 @@ from necro.registry import check, implements
 DB: dict[int, dict] = {}
 
 
-@implements("C1.E2", "C16.E2")
+@implements("C1.E2", "C16.E3")
 def create(record: dict) -> int:
     """Create a record and save it to the database."""
     rid = len(DB) + 1
@@ -19,13 +19,13 @@ def create(record: dict) -> int:
     return rid
 
 
-@implements("C1.E3", "C16.E3")
+@implements("C1.E3", "C16.E4")
 def read(rid: int) -> dict:
     """Read a record by id."""
     return DB[rid]
 
 
-@implements("C1.E7", "C16.E6")
+@implements("C1.E6", "C16.E7")
 def list_all() -> list[dict]:
     """Return all records as JSON for the frontend."""
     return list(DB.values())
@@ -39,7 +39,7 @@ def delete(rid: int) -> None:
     DB.pop(rid, None)
 
 
-@check("C1.E2", "C16.E2", "C1.E3", "C16.E3", "C1.E7", "C16.E6")
+@check("C1.E2", "C16.E3", "C1.E3", "C16.E4", "C1.E6", "C16.E7")
 def _crud_happy_path():
     DB.clear()
     rid = create({"title": "hello"})

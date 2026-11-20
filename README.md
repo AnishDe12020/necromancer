@@ -32,7 +32,7 @@ Expected ending:
 13/13 elements mapped to passing, grounded code
 VERDICT: ACCEPT
 ...
-2/13 elements mapped to passing, grounded code
+1/13 elements mapped to passing, grounded code
 VERDICT: REJECT (rebuild)
 
 DEMO OK: reference accepted, CRUD rejected
@@ -45,13 +45,14 @@ Full output of an offline run is in [`docs/sample_run.txt`](docs/sample_run.txt)
 "Dynamically providing a news feed about a user of a social network". Filed 2006-08-11,
 Zuckerberg among the inventors. Google Patents lists the adjusted expiry as 2026-08-22.
 
-- 3 independent claims (method 1, system 16, storage medium 24) → 20 elements → **13 canonical**
+- 3 independent claims (method 1, system 16, storage medium 24) → 19 elements → **13 canonical**
   (claim 24 restates claim 1 word for word, so its elements are aliased, not built twice)
 - `impls/us7669123/feed_engine.py`: a small working feed engine. Activity monitoring, a sqlite
-  activity store, story generation, "join the same activity" links, friend-scoped privacy with
-  per-user hidden activity types, and affinity × recency ranking. All 13 elements map to it and pass.
+  activity store, story generation, "join the same activity" links, and friend-scoped privacy with
+  per-user hidden activity types. All 13 elements map to it and pass. It also ranks by affinity ×
+  recency, which goes beyond the patent: claim 1 never recites ordering.
 - `impls/crud_baseline/app.py`: the control. A CRUD app that tags itself onto 3 elements and
-  passes its own happy-path checks. pytest gives it 6/13; the judge gives it 2/13 and rejects it.
+  passes its own happy-path checks. pytest gives it 6/13; the judge gives it 1/13 and rejects it.
 
 ## Commands
 
@@ -94,10 +95,10 @@ the element's content words. Statuses: `PASS`, `UNMAPPED`, `NO_CHECK`, `CHECK_FA
 
 ## Honest limitations (v0)
 
-- **Offline fixture is reconstructed.** The claim structure in `fixtures/US7669123B2.claims.txt`
-  is rebuilt from public excerpts, not copied verbatim (the sandbox it was built in couldn't reach
-  Google Patents). Run `python -m necro fetch US7669123B2` on a normal connection to replace it
-  with the live claims, then re-run. Element IDs may shift if the real wording splits differently.
+- **Fixtures are live snapshots.** `fixtures/US7669123B2.claims.txt` is the granted claim text as
+  pulled by `python -m necro fetch`. The first draft ran on claims reconstructed from press excerpts,
+  which had claim 1 reciting "assigning an order" to news items. The real claim doesn't. That's the
+  point of fetching: build to the claims, not to what people say the patent covers.
 - **Grounding is lexical.** It catches a CRUD app tagging `read()` onto "generating news items",
   but an agent could stuff docstrings with claim words. The judge interface is the slot for an
   LLM judge that never saw the build session and has to cite the line of code for each element.

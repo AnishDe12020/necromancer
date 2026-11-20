@@ -1,32 +1,31 @@
 =================== unit tests (extractor + HTML parser)
 ......                                                                   [100%]
-6 passed in 0.03s
+6 passed in 0.04s
 
 =================== US7669123B2 vs reference feed engine
-[extract] US7669123B2 (fixture): 3 independent claims, 20 elements, 13 canonical after de-dup
+[extract] US7669123B2 (fixture): 3 independent claims, 19 elements, 13 canonical after de-dup
   claim 1 [method] A method for displaying a news feed in a social network environment, t...
     C1.E1   monitoring_activities_social_network_environment
     C1.E2   storing_activities_database
     C1.E3   generating_news_items_regarding_activities
-    C1.E4   attaching_informational_link_associated_activities
-    C1.E5   limiting_access_news_items_predetermined
-    C1.E6   assigning_order_news_items
-    C1.E7   displaying_news_feed_news_items
-  claim 16 [system] A system for displaying a news feed in a social network environment, t...
-    C16.E1  monitoring_module_monitor_activities_social
-    C16.E2  database_store_activities
-    C16.E3  news_item_generator_generate_news
-    C16.E4  link_component_attach_informational_link
-    C16.E5  privacy_component_limit_access_news
-    C16.E6  media_generator_display_news_feed
-  claim 24 [medium] A computer readable storage medium having embodied thereon a program, ...
+    C1.E4   attaching_link_associated_activities_another
+    C1.E5   limiting_access_news_items_set
+    C1.E6   displaying_news_feed_news_items
+  claim 16 [system] A system for displaying a news feed...
+    C16.E1  social_network_environment
+    C16.E2  module_monitor_activities_social_network
+    C16.E3  storage_medium_storing_activities_database
+    C16.E4  module_generate_news_items_regarding
+    C16.E5  link_component_attach_link_associated
+    C16.E6  privacy_component_limit_access_news
+    C16.E7  media_generator_display_news_feed
+  claim 24 [medium] A computer readable medium having embodied thereon a program, the prog...
     C24.E1  monitoring_activities_social_network_environment  = alias of C1.E1
     C24.E2  storing_activities_database  = alias of C1.E2
     C24.E3  generating_news_items_regarding_activities  = alias of C1.E3
-    C24.E4  attaching_informational_link_associated_activities  = alias of C1.E4
-    C24.E5  limiting_access_news_items_predetermined  = alias of C1.E5
-    C24.E6  assigning_order_news_items  = alias of C1.E6
-    C24.E7  displaying_news_feed_news_items  = alias of C1.E7
+    C24.E4  attaching_link_associated_activities_another  = alias of C1.E4
+    C24.E5  limiting_access_news_items_set  = alias of C1.E5
+    C24.E6  displaying_news_feed_news_items  = alias of C1.E6
 [evalgen] 13 evals -> out/US7669123B2/evals/test_us7669123b2_claims.py
 [evalgen] build brief -> out/US7669123B2/BUILD_BRIEF.md
 
@@ -36,89 +35,88 @@
 
 judge  US7669123B2  impl=impls.us7669123.feed_engine
 
-ok C1.E1   PASS        ground=0.80  feed_engine.monitor_activity
+ok C1.E1   PASS        ground=1.00  feed_engine.monitor_activity
            monitoring a plurality of activities in a social network environment
-ok C1.E2   PASS        ground=0.67  feed_engine.store_activity
+ok C1.E2   PASS        ground=1.00  feed_engine.store_activity
            storing the plurality of activities in a database
-ok C1.E3   PASS        ground=0.60  feed_engine.generate_news_items
-           generating a plurality of news items regarding the activities associated with a user of the soci...
+ok C1.E3   PASS        ground=0.69  feed_engine.generate_news_items
+           generating a plurality of news items regarding one or more of the activities, wherein one or mor...
 ok C1.E4   PASS        ground=0.92  feed_engine.attach_informational_link
-           attaching an informational link associated with at least one of the activities to at least one o...
+           attaching a link associated with at least one of the activities of another user to at least one ...
 ok C1.E5   PASS        ground=1.00  feed_engine.limit_access
-           limiting access to the plurality of news items to a predetermined set of viewing users
-ok C1.E6   PASS        ground=1.00  feed_engine.assign_order
-           assigning an order to the plurality of news items
-ok C1.E7   PASS        ground=1.00  feed_engine.display_news_feed
+           limiting access to the plurality of news items to a set of viewing users
+ok C1.E6   PASS        ground=1.00  feed_engine.display_news_feed
            displaying a news feed comprising two or more of the plurality of news items to at least one vie...
-ok C16.E1  PASS        ground=0.83  feed_engine.monitor_activity
-           a monitoring module configured to monitor a plurality of activities in the social network enviro...
-ok C16.E2  PASS        ground=1.00  feed_engine.store_activity
-           a database configured to store the plurality of activities
-ok C16.E3  PASS        ground=1.00  feed_engine.generate_news_items
-           a news item generator configured to generate a plurality of news items regarding the activities ...
-ok C16.E4  PASS        ground=1.00  feed_engine.attach_informational_link
-           a link component configured to attach an informational link to at least one of the news items en...
-ok C16.E5  PASS        ground=1.00  feed_engine.limit_access, feed_engine.assign_order
-           a privacy component configured to limit access to the plurality of news items to a predetermined...
-ok C16.E6  PASS        ground=1.00  feed_engine.display_news_feed
+ok C16.E1  PASS        ground=1.00  feed_engine.FeedEngine
+           a social network environment
+ok C16.E2  PASS        ground=1.00  feed_engine.monitor_activity
+           a module configured to monitor a plurality of activities in a social network environment
+ok C16.E3  PASS        ground=1.00  feed_engine.store_activity
+           a storage medium for storing the plurality of activities in a database
+ok C16.E4  PASS        ground=0.79  feed_engine.generate_news_items
+           a module configured to generate a plurality of news items regarding one or more of the activitie...
+ok C16.E5  PASS        ground=0.93  feed_engine.attach_informational_link
+           a link component configured to attach a link associated with at least one of the activities of a...
+ok C16.E6  PASS        ground=1.00  feed_engine.limit_access
+           a privacy component configured to limit access to the plurality of news items to a set of viewin...
+ok C16.E7  PASS        ground=1.00  feed_engine.display_news_feed
            a media generator configured to display a news feed comprising two or more of the plurality of n...
 
 13/13 elements mapped to passing, grounded code
 VERDICT: ACCEPT
 
 =================== US7669123B2 vs generic CRUD app (control, should REJECT)
-[extract] US7669123B2 (fixture): 3 independent claims, 20 elements, 13 canonical after de-dup
+[extract] US7669123B2 (fixture): 3 independent claims, 19 elements, 13 canonical after de-dup
   claim 1 [method] A method for displaying a news feed in a social network environment, t...
     C1.E1   monitoring_activities_social_network_environment
     C1.E2   storing_activities_database
     C1.E3   generating_news_items_regarding_activities
-    C1.E4   attaching_informational_link_associated_activities
-    C1.E5   limiting_access_news_items_predetermined
-    C1.E6   assigning_order_news_items
-    C1.E7   displaying_news_feed_news_items
-  claim 16 [system] A system for displaying a news feed in a social network environment, t...
-    C16.E1  monitoring_module_monitor_activities_social
-    C16.E2  database_store_activities
-    C16.E3  news_item_generator_generate_news
-    C16.E4  link_component_attach_informational_link
-    C16.E5  privacy_component_limit_access_news
-    C16.E6  media_generator_display_news_feed
-  claim 24 [medium] A computer readable storage medium having embodied thereon a program, ...
+    C1.E4   attaching_link_associated_activities_another
+    C1.E5   limiting_access_news_items_set
+    C1.E6   displaying_news_feed_news_items
+  claim 16 [system] A system for displaying a news feed...
+    C16.E1  social_network_environment
+    C16.E2  module_monitor_activities_social_network
+    C16.E3  storage_medium_storing_activities_database
+    C16.E4  module_generate_news_items_regarding
+    C16.E5  link_component_attach_link_associated
+    C16.E6  privacy_component_limit_access_news
+    C16.E7  media_generator_display_news_feed
+  claim 24 [medium] A computer readable medium having embodied thereon a program, the prog...
     C24.E1  monitoring_activities_social_network_environment  = alias of C1.E1
     C24.E2  storing_activities_database  = alias of C1.E2
     C24.E3  generating_news_items_regarding_activities  = alias of C1.E3
-    C24.E4  attaching_informational_link_associated_activities  = alias of C1.E4
-    C24.E5  limiting_access_news_items_predetermined  = alias of C1.E5
-    C24.E6  assigning_order_news_items  = alias of C1.E6
-    C24.E7  displaying_news_feed_news_items  = alias of C1.E7
+    C24.E4  attaching_link_associated_activities_another  = alias of C1.E4
+    C24.E5  limiting_access_news_items_set  = alias of C1.E5
+    C24.E6  displaying_news_feed_news_items  = alias of C1.E6
 [evalgen] 13 evals -> out/US7669123B2/evals/test_us7669123b2_claims.py
 [evalgen] build brief -> out/US7669123B2/BUILD_BRIEF.md
 
 [evals] pytest against impls.crud_baseline.app
-F..FFF.F..FF.                                                            [100%]
+F..FF.FF..FF.                                                            [100%]
 =================================== FAILURES ===================================
 _________ test_C1_E1_monitoring_activities_social_network_environment __________
 UNIMPLEMENTED C1.E1: monitoring a plurality of activities in a social network environment
-________ test_C1_E4_attaching_informational_link_associated_activities _________
-UNIMPLEMENTED C1.E4: attaching an informational link associated with at least one of the activities to at least one of the news items, the informational link enabling a viewing user to participate in the same activity
-_____________ test_C1_E5_limiting_access_news_items_predetermined ______________
-UNIMPLEMENTED C1.E5: limiting access to the plurality of news items to a predetermined set of viewing users
-____________________ test_C1_E6_assigning_order_news_items _____________________
-UNIMPLEMENTED C1.E6: assigning an order to the plurality of news items
-___________ test_C16_E1_monitoring_module_monitor_activities_social ____________
-UNIMPLEMENTED C16.E1: a monitoring module configured to monitor a plurality of activities in the social network environment
-_____________ test_C16_E4_link_component_attach_informational_link _____________
-UNIMPLEMENTED C16.E4: a link component configured to attach an informational link to at least one of the news items enabling a viewing user to participate in the same activity
-_______________ test_C16_E5_privacy_component_limit_access_news ________________
-UNIMPLEMENTED C16.E5: a privacy component configured to limit access to the plurality of news items to a predetermined set of viewing users and to assign an order to the news items
+___________ test_C1_E4_attaching_link_associated_activities_another ____________
+UNIMPLEMENTED C1.E4: attaching a link associated with at least one of the activities of another user to at least one of the plurality of news items where the link enables a viewing user to participate in the same activity as the another user
+__________________ test_C1_E5_limiting_access_news_items_set ___________________
+UNIMPLEMENTED C1.E5: limiting access to the plurality of news items to a set of viewing users
+____________________ test_C16_E1_social_network_environment ____________________
+UNIMPLEMENTED C16.E1: a social network environment
+_____________ test_C16_E2_module_monitor_activities_social_network _____________
+UNIMPLEMENTED C16.E2: a module configured to monitor a plurality of activities in a social network environment
+______________ test_C16_E5_link_component_attach_link_associated _______________
+UNIMPLEMENTED C16.E5: a link component configured to attach a link associated with at least one of the activities of another user to at least one of the plurality of news items where the link enables a viewing user to participate in the same activity as the another user
+_______________ test_C16_E6_privacy_component_limit_access_news ________________
+UNIMPLEMENTED C16.E6: a privacy component configured to limit access to the plurality of news items to a set of viewing users
 =========================== short test summary info ============================
 FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C1_E1_monitoring_activities_social_network_environment
-FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C1_E4_attaching_informational_link_associated_activities
-FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C1_E5_limiting_access_news_items_predetermined
-FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C1_E6_assigning_order_news_items
-FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E1_monitoring_module_monitor_activities_social
-FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E4_link_component_attach_informational_link
-FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E5_privacy_component_limit_access_news
+FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C1_E4_attaching_link_associated_activities_another
+FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C1_E5_limiting_access_news_items_set
+FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E1_social_network_environment
+FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E2_module_monitor_activities_social_network
+FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E5_link_component_attach_link_associated
+FAILED out/US7669123B2/evals/test_us7669123b2_claims.py::test_C16_E6_privacy_component_limit_access_news
 7 failed, 6 passed in 0.02s
 
 judge  US7669123B2  impl=impls.crud_baseline.app
@@ -129,39 +127,40 @@ XX C1.E1   UNMAPPED    ground=0.00  -
 ok C1.E2   PASS        ground=0.33  app.create
            storing the plurality of activities in a database
 XX C1.E3   UNGROUNDED  ground=0.00  app.read
-           generating a plurality of news items regarding the activities associated with a user of the soci...
+           generating a plurality of news items regarding one or more of the activities, wherein one or mor...
            -> implementer doesn't describe this element
 XX C1.E4   UNMAPPED    ground=0.00  -
-           attaching an informational link associated with at least one of the activities to at least one o...
+           attaching a link associated with at least one of the activities of another user to at least one ...
            -> no function claims this element
 XX C1.E5   UNMAPPED    ground=0.00  -
-           limiting access to the plurality of news items to a predetermined set of viewing users
+           limiting access to the plurality of news items to a set of viewing users
            -> no function claims this element
-XX C1.E6   UNMAPPED    ground=0.00  -
-           assigning an order to the plurality of news items
-           -> no function claims this element
-XX C1.E7   UNGROUNDED  ground=0.00  app.list_all
+XX C1.E6   UNGROUNDED  ground=0.00  app.list_all
            displaying a news feed comprising two or more of the plurality of news items to at least one vie...
            -> implementer doesn't describe this element
 XX C16.E1  UNMAPPED    ground=0.00  -
-           a monitoring module configured to monitor a plurality of activities in the social network enviro...
+           a social network environment
            -> no function claims this element
-ok C16.E2  PASS        ground=0.33  app.create
-           a database configured to store the plurality of activities
-XX C16.E3  UNGROUNDED  ground=0.00  app.read
-           a news item generator configured to generate a plurality of news items regarding the activities ...
+XX C16.E2  UNMAPPED    ground=0.00  -
+           a module configured to monitor a plurality of activities in a social network environment
+           -> no function claims this element
+XX C16.E3  UNGROUNDED  ground=0.20  app.create
+           a storage medium for storing the plurality of activities in a database
            -> implementer doesn't describe this element
-XX C16.E4  UNMAPPED    ground=0.00  -
-           a link component configured to attach an informational link to at least one of the news items en...
-           -> no function claims this element
+XX C16.E4  UNGROUNDED  ground=0.00  app.read
+           a module configured to generate a plurality of news items regarding one or more of the activitie...
+           -> implementer doesn't describe this element
 XX C16.E5  UNMAPPED    ground=0.00  -
-           a privacy component configured to limit access to the plurality of news items to a predetermined...
+           a link component configured to attach a link associated with at least one of the activities of a...
            -> no function claims this element
-XX C16.E6  UNGROUNDED  ground=0.00  app.list_all
+XX C16.E6  UNMAPPED    ground=0.00  -
+           a privacy component configured to limit access to the plurality of news items to a set of viewin...
+           -> no function claims this element
+XX C16.E7  UNGROUNDED  ground=0.00  app.list_all
            a media generator configured to display a news feed comprising two or more of the plurality of n...
            -> implementer doesn't describe this element
 
-2/13 elements mapped to passing, grounded code
+1/13 elements mapped to passing, grounded code
 VERDICT: REJECT (rebuild)
 
 DEMO OK: reference accepted, CRUD rejected

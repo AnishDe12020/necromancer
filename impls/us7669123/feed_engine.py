@@ -34,9 +34,11 @@ class NewsItem:
     score: float = 0.0
 
 
+@implements("C16.E1")
 @dataclass
 class FeedEngine:
-    """Social network environment: users, friendships, privacy settings, activity store."""
+    """Social network environment: users, friendships between them, per-user privacy
+    settings, and the activity store everything else runs against."""
 
     db: sqlite3.Connection = field(default_factory=lambda: sqlite3.connect(":memory:"))
     friends: dict[str, set[str]] = field(default_factory=dict)
@@ -66,18 +68,18 @@ VERB_TEXT = {
 # ---------------------------------------------------------------- claim elements
 
 
-@implements("C1.E1", "C16.E1")
+@implements("C1.E1", "C16.E2")
 def monitor_activity(eng: FeedEngine, actor: str, verb: str, obj: str, ts: float | None = None) -> Activity:
-    """Monitoring module: monitor each activity a user performs in the social network
+    """Module configured to monitor a plurality of activities: monitor each activity a user performs in the social network
     environment and hand it to storage. Every activity passes through here."""
     if verb not in VERB_TEXT:
         raise ValueError(f"unknown activity verb {verb!r}")
     return store_activity(eng, actor, verb, obj, ts if ts is not None else time.time())
 
 
-@implements("C1.E2", "C16.E2")
+@implements("C1.E2", "C16.E3")
 def store_activity(eng: FeedEngine, actor: str, verb: str, obj: str, ts: float) -> Activity:
-    """Store the plurality of activities in a database (sqlite activities table)."""
+    """Storage medium storing the plurality of activities in a database (sqlite activities table)."""
     cur = eng.db.execute(
         "INSERT INTO activities (actor, verb, obj, ts) VALUES (?, ?, ?, ?)", (actor, verb, obj, ts)
     )
@@ -94,21 +96,21 @@ def _activities_by(eng: FeedEngine, users: set[str]) -> list[Activity]:
     return [Activity(*r) for r in rows]
 
 
-@implements("C1.E3", "C16.E3")
+@implements("C1.E3", "C16.E4")
 def generate_news_items(eng: FeedEngine, users: set[str]) -> list[NewsItem]:
-    """News item generator: generate news items regarding the activities associated
-    with a user, rendered as human-readable stories ("alice commented on photo:42")."""
+    """Module configured to generate news items regarding activities performed by another
+    user, for presentation to viewing users, rendered as stories ("alice commented on photo:42")."""
     return [
         NewsItem(a, f"{a.actor} {VERB_TEXT[a.verb].format(o=a.obj)}")
         for a in _activities_by(eng, users)
     ]
 
 
-@implements("C1.E4", "C16.E4")
+@implements("C1.E4", "C16.E5")
 def attach_informational_link(item: NewsItem) -> NewsItem:
-    """Link component: attach an informational link associated with the activity to the
-    news item, enabling a viewing user to participate in the same activity
-    (comment on the same photo, join the same group)."""
+    """Link component: attach a link associated with another user's activity to the news
+    item, where the link enables a viewing user to participate in the same activity as the
+    another user (comment on the same photo, join the same group)."""
     kind, _, ident = item.activity.obj.partition(":")
     action = {"commented_on": "comment", "joined": "join", "liked": "like",
               "friended": "add_friend", "posted": "view"}[item.activity.verb]
@@ -116,10 +118,10 @@ def attach_informational_link(item: NewsItem) -> NewsItem:
     return item
 
 
-@implements("C1.E5", "C16.E5")
+@implements("C1.E5", "C16.E6")
 def limit_access(eng: FeedEngine, item: NewsItem) -> NewsItem:
-    """Privacy component: limit access to the news item to a predetermined set of viewing
-    users, the actor's friends, minus anything the actor's privacy settings hide."""
+    """Privacy component: limit access to the news items to a set of viewing users, the
+    actor's friends, minus any activity type the actor's privacy settings hide."""
     actor = item.activity.actor
     if item.activity.verb in eng.hidden_verbs.get(actor, set()):
         item.audience = frozenset()
@@ -128,11 +130,11 @@ def limit_access(eng: FeedEngine, item: NewsItem) -> NewsItem:
     return item
 
 
-@implements("C1.E6", "C16.E5")
 def assign_order(eng: FeedEngine, viewer: str, items: list[NewsItem], now: float | None = None,
                  half_life_s: float = 6 * 3600) -> list[NewsItem]:
-    """Assign an order to the news items: rank by viewer-to-user relationship affinity
-    times recency decay, newest and closest first."""
+    """Rank news items by viewer-to-user affinity times recency decay.
+
+    Not part of the claims: claim 1 never recites ordering. This is product, not necromancy."""
     now = now if now is not None else time.time()
     for it in items:
         age = max(0.0, now - it.activity.ts)
@@ -140,10 +142,10 @@ def assign_order(eng: FeedEngine, viewer: str, items: list[NewsItem], now: float
     return sorted(items, key=lambda i: (-i.score, -i.activity.id))
 
 
-@implements("C1.E7", "C16.E6")
+@implements("C1.E6", "C16.E7")
 def display_news_feed(eng: FeedEngine, viewer: str, limit: int = 20, now: float | None = None) -> list[NewsItem]:
-    """Media generator: display a news feed of two or more news items to a viewing user
-    in the predetermined set of viewing users. The full pipeline end to end."""
+    """Media generator: display a news feed comprising two or more news items to a viewing
+    user in the predetermined set of viewing users. The full pipeline end to end."""
     items = generate_news_items(eng, eng.friends.get(viewer, set()))
     items = [limit_access(eng, attach_informational_link(i)) for i in items]
     visible = [i for i in items if viewer in i.audience]
@@ -165,7 +167,7 @@ def _world(now: float = 1_000_000.0) -> FeedEngine:
     return e
 
 
-@check("C1.E1", "C16.E1")
+@check("C1.E1", "C16.E2")
 def _monitor_rejects_unknown_and_records_known():
     e = FeedEngine()
     a = monitor_activity(e, "x", "joined", "group:g", ts=1.0)
@@ -178,7 +180,7 @@ def _monitor_rejects_unknown_and_records_known():
         raise AssertionError("unknown activity must not be monitored silently")
 
 
-@check("C1.E2", "C16.E2")
+@check("C1.E2", "C16.E3")
 def _activities_persist_in_db():
     e = _world()
     (n,) = e.db.execute("SELECT COUNT(*) FROM activities").fetchone()
@@ -186,20 +188,20 @@ def _activities_persist_in_db():
     assert e.db.execute("SELECT actor FROM activities WHERE obj='photo:42'").fetchone() == ("bob",)
 
 
-@check("C1.E3", "C16.E3")
+@check("C1.E3", "C16.E4")
 def _news_items_describe_activities():
     items = generate_news_items(_world(), {"bob"})
     texts = {i.text for i in items}
     assert texts == {"bob commented on photo:42", "bob liked post:7"}, texts
 
 
-@check("C1.E4", "C16.E4")
+@check("C1.E4", "C16.E5")
 def _link_lets_viewer_join_same_activity():
     it = attach_informational_link(generate_news_items(_world(), {"carol"})[0])
     assert it.link == "/group/rust-blr?action=join"
 
 
-@check("C1.E5", "C16.E5")
+@check("C1.E5", "C16.E6")
 def _non_friends_and_hidden_verbs_are_blocked():
     e = _world()
     bob_items = [limit_access(e, i) for i in generate_news_items(e, {"bob"})]
@@ -210,7 +212,7 @@ def _non_friends_and_hidden_verbs_are_blocked():
     assert liked and liked[0].audience == frozenset()
 
 
-@check("C1.E6", "C16.E5")
+@check("C1.E6", "C16.E7")
 def _order_uses_affinity_and_recency():
     now = 1_000_000.0
     e = _world(now)
@@ -225,7 +227,7 @@ def _order_uses_affinity_and_recency():
     assert order[-1] == "bob liked post:7", order
 
 
-@check("C1.E7", "C16.E6")
+@check("C1.E6", "C16.E7")
 def _feed_shows_two_plus_permitted_items_only():
     now = 1_000_000.0
     e = _world(now)
@@ -234,3 +236,14 @@ def _feed_shows_two_plus_permitted_items_only():
     assert all("alice" in i.audience and i.link for i in feed)
     assert "dave posted post:9" not in {i.text for i in feed}   # dave isn't alice's friend
     assert display_news_feed(e, "nobody", now=now) == []
+    # items relate to activities performed by *another* user: alice never sees her own
+    monitor_activity(e, "alice", "posted", "post:1", ts=now)
+    assert all(i.activity.actor != "alice" for i in display_news_feed(e, "alice", now=now))
+
+
+@check("C16.E1")
+def _environment_holds_users_relationships_and_settings():
+    e = _world()
+    assert e.friends["alice"] == {"bob", "carol"} and e.friends["bob"] == {"alice", "dave"}
+    e.hidden_verbs["carol"] = {"joined"}
+    assert "carol joined group:rust-blr" not in {i.text for i in display_news_feed(e, "alice")}
