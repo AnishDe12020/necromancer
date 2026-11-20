@@ -1,0 +1,20 @@
+# US7669123B2 "Dynamically providing a news feed about a user of a social network"
+# Filed 2006-08-11, adjusted expiry 2026-08-22 (per Google Patents).
+#
+# OFFLINE FIXTURE. Claim structure (independent claims 1, 16, 24 and their elements)
+# is reconstructed from public excerpts of the granted claims, not copied verbatim.
+# For exact text run on a networked machine:
+#     python -m necro fetch US7669123B2
+# which overwrites fixtures/US7669123B2.claims.txt with the live claims.
+
+1. A method for displaying a news feed in a social network environment, the method comprising: monitoring a plurality of activities in a social network environment; storing the plurality of activities in a database; generating a plurality of news items regarding the activities associated with a user of the social network environment; attaching an informational link associated with at least one of the activities to at least one of the news items, the informational link enabling a viewing user to participate in the same activity; limiting access to the plurality of news items to a predetermined set of viewing users; assigning an order to the plurality of news items; and displaying a news feed comprising two or more of the plurality of news items to at least one viewing user of the predetermined set of viewing users.
+
+2. The method of claim 1, wherein the activities include adding a friend, commenting on a post, and joining a group.
+
+3. The method of claim 1, wherein assigning the order is based on a relationship between the user and the viewing user.
+
+16. A system for displaying a news feed in a social network environment, the system comprising: a monitoring module configured to monitor a plurality of activities in the social network environment; a database configured to store the plurality of activities; a news item generator configured to generate a plurality of news items regarding the activities associated with a user; a link component configured to attach an informational link to at least one of the news items enabling a viewing user to participate in the same activity; a privacy component configured to limit access to the plurality of news items to a predetermined set of viewing users and to assign an order to the news items; and a media generator configured to display a news feed comprising two or more of the plurality of news items to at least one viewing user.
+
+17. The system of claim 16, wherein the privacy component applies privacy settings selected by the user.
+
+24. A computer readable storage medium having embodied thereon a program, the program being executable by a processor for performing a method for displaying a news feed in a social network environment, the method comprising: monitoring a plurality of activities in a social network environment; storing the plurality of activities in a database; generating a plurality of news items regarding the activities associated with a user of the social network environment; attaching an informational link associated with at least one of the activities to at least one of the news items, the informational link enabling a viewing user to participate in the same activity; limiting access to the plurality of news items to a predetermined set of viewing users; assigning an order to the plurality of news items; and displaying a news feed comprising two or more of the plurality of news items to at least one viewing user of the predetermined set of viewing users.
